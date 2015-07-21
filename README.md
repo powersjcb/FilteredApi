@@ -1,4 +1,4 @@
-# Search Optional Filtering for a Search API
+# Optional Search Filtering API
 
 ### Setup
 Data imported into postgres database as ActiveRecord models.  Table indexed on query
