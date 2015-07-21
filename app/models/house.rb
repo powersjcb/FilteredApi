@@ -33,7 +33,6 @@ class House < ActiveRecord::Base
       queries << "price <= ?"
       values  << options[:max_price]
     end
-
     if options[:min_bed]
       queries << "bedrooms >= ?"
       values  << options[:min_bed]
@@ -42,7 +41,6 @@ class House < ActiveRecord::Base
       queries << "bedrooms <= ?"
       values  << options[:max_bed]
     end
-
     if options[:min_bath]
       queries << "bathrooms >= ?"
       values  << options[:min_bath]
@@ -54,7 +52,11 @@ class House < ActiveRecord::Base
 
     args = [queries.join(' AND ')].concat(values)
 
-    House.where(*args)
+    if options[:page]
+      House.where(*args).page(options[:page])
+    else
+      House.where(*args)
+    end
   end
 
 end
