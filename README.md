@@ -1,15 +1,21 @@
 # Search Optional Filtering for a Search API
 
 ### Setup
-Data imported into postgres database as ActiveRecord models.  Table indexed on query arguments. (price, bathrooms, bedrooms)
+Data imported into postgres database as ActiveRecord models.  Table indexed on query
+arguments. (price, bathrooms, bedrooms)
+
+- Reminder: Heroku postgres hobby servers limit at 10k rows :smiley:
+
 
 Since data contains GIS information, it would be good to extend postgres with [PostGIS](http://postgis.net/) if the data needed to be indexed spatially. This could be implemented with [PostGIS ActiveRecord Adaptor](https://github.com/rgeo/activerecord-postgis-adapter), which appears to be well supported.
 
-### Querying
+### Querying with Filters
 
-Demo: 
+[Demo Query](https://secret-beach-2991.herokuapp.com/listings?min_price=100000&max_price=200000&min_bed=2&max_bed=2&min_bath=2&max_bath=2)
 
-The route `/listings` accepts the options: `min_price, max_price, min_bed, max_bed, min_bath, max_bath` which create chaining queries.  The user inputs are coerced to integers and then passed as arguments to a `#where` method. The query input will be protected from arrays being injected into the query args and they will be properly SQL escaped by ActiveRecord's `.where' method.
+[Paginated Query](https://secret-beach-2991.herokuapp.com/listings?min_price=100000&max_price=200000&min_bed=2&max_bed=2&min_bath=2&max_bath=2&page=1)
+
+The route `/listings` accepts the optional filters: `min_price, max_price, min_bed, max_bed, min_bath, max_bath` which are built into one SQL query.  The user inputs are coerced to integers and then passed as arguments to a `#where` method. The query inputs is protected by integer conversion and they will be properly SQL escaped by ActiveRecord's `.where' method.
 
 [Conditionally constructed ActiveRecord query](app/models/house.rb)
 
