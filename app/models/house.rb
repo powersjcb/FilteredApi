@@ -21,39 +21,39 @@ class House < ActiveRecord::Base
 
 
   # options: min_price, max_price, min_bed, max_bed, min_bath, max_bath
-  def listings(options)
+  def self.listings(options)
     queries = []
     values  = []
 
     if options[:min_price]
-      queries << "min_price >= ?"
+      queries << "price >= ?"
       values  << options[:min_price]
     end
     if options[:max_price]
-      queries << "min_price >= ?"
-      values  << options[:min_price]
+      queries << "price <= ?"
+      values  << options[:max_price]
     end
 
     if options[:min_bed]
-      queries << "min_bed >= ?"
+      queries << "bedrooms >= ?"
       values  << options[:min_bed]
     end
     if options[:max_bed]
-      queries << "max_bed >= ?"
+      queries << "bedrooms <= ?"
       values  << options[:max_bed]
     end
 
     if options[:min_bath]
-      queries << "min_bath >= ?"
+      queries << "bathrooms >= ?"
       values  << options[:min_bath]
     end
     if options[:max_bath]
-      queries << "max_bath >= ?"
+      queries << "bathrooms <= ?"
       values  << options[:max_bath]
     end
 
-    queries.join(' AND ').concat(values)
-    
+    args = [queries.join(' AND ')].concat(values)
+
     House.where(*args)
   end
 
