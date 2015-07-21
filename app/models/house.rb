@@ -27,33 +27,33 @@ class House < ActiveRecord::Base
 
     if options[:min_price]
       queries << "price >= ?"
-      values  << options[:min_price]
+      values  << Integer(options[:min_price])
     end
     if options[:max_price]
       queries << "price <= ?"
-      values  << options[:max_price]
+      values  << Integer(options[:max_price])
     end
     if options[:min_bed]
       queries << "bedrooms >= ?"
-      values  << options[:min_bed]
+      values  << Integer(options[:min_bed])
     end
     if options[:max_bed]
       queries << "bedrooms <= ?"
-      values  << options[:max_bed]
+      values  << Integer(options[:max_bed])
     end
     if options[:min_bath]
       queries << "bathrooms >= ?"
-      values  << options[:min_bath]
+      values  << Integer(options[:min_bath])
     end
     if options[:max_bath]
       queries << "bathrooms <= ?"
-      values  << options[:max_bath]
+      values  << Integer(options[:max_bath])
     end
 
     args = [queries.join(' AND ')].concat(values)
 
     if options[:page]
-      House.where(*args).page(options[:page])
+      House.where(*args).page(Integer(options[:page]))
     else
       House.where(*args)
     end
