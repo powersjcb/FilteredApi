@@ -7,6 +7,8 @@ Since data contains GIS information, it would be good to extend postgres with [P
 
 ### Querying
 
+Demo: 
+
 The route `/listings` accepts the options: `min_price, max_price, min_bed, max_bed, min_bath, max_bath` which create chaining queries.  The user inputs are coerced to integers and then passed as arguments to a `#where` method. The query input will be protected from arrays being injected into the query args and they will be properly SQL escaped by ActiveRecord's `.where' method.
 
 [Conditionally constructed ActiveRecord query](app/models/house.rb)
